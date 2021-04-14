@@ -4,8 +4,7 @@ services:
 
   sample-postgres:
     container_name: sample-postgres
-    build: ./docker/postgres
-    image: sample-postgres
+    image: postgres:12.6-alpine
     ports:
       - "127.0.0.1:5432:5432"
     env_file:
@@ -23,7 +22,6 @@ services:
     volumes:
       - .:/app
     ports:
-      - 8090:${PORT}
       - 5555:5555
     env_file:
       - .env
