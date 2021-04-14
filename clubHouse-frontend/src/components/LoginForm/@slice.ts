@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { fetchData } from 'src/utils/API';
 
 export interface Form {
     login: string;
@@ -31,7 +32,7 @@ export const loginUser = createAsyncThunk(
             body: JSON.stringify({username: data.login, password: data.password}),
             method: 'POST',
         };
-        const response = await fetch('/api/login/', postOptions);
+        const response = await fetchData('/api/login/', postOptions);
         return await (response.json()) as Response;
     })
 
@@ -51,7 +52,7 @@ export const loginFormSlice = createSlice({
         builder.addCase(loginUser.pending, (state, action) => {
             state.loading = 'pending'
         })
-            .addCase(loginUser.fulfilled, (state, action) => {
+            builder.addCase(loginUser.fulfilled, (state, action) => {
                 state.loading = 'succeeded';
                 state.password = '';
                 state.login = '';
