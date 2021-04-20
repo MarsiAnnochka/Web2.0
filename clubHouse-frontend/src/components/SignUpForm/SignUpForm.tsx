@@ -83,7 +83,7 @@ const SignUpForm: React.FC = () => {
 
                 </Form.Row>
 
-                <Button className="color-primary" type="submit"
+                <Button className="btn-secondary" type="submit"
                         onClick={() => dispatch(signUpUser({login, password, firstName, lastName, email, city}))}>
                     Sign Up
                 </Button>

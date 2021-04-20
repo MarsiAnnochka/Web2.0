@@ -3,7 +3,7 @@ import {configureStore, getDefaultMiddleware} from "@reduxjs/toolkit";
 import {connectRouter} from "connected-react-router";
 import loginFormReducer from './components/LoginForm/@slice';
 import signUpFormReducer from './components/SignUpForm/@slice';
-import roomReducer from './components/Room/@slice';
+import roomReducer from './components/RoomForm/@slice';
 
 export const history = createBrowserHistory();
 

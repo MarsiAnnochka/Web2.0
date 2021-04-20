@@ -5,7 +5,7 @@ import {createRoom, joinRoom} from './@slice';
 import {Button, Col, Form} from "react-bootstrap";
 import LoginForm from '../LoginForm/LoginForm';
 
-const enterRoom: React.FC = () => {
+const RoomForm: React.FC = () => {
     const [roomName, setRoomName] = useState("");
     const [roomId, setRoomId] = useState("");
     const currentRoom = useAppSelector(state => state.room);
@@ -14,13 +14,12 @@ const enterRoom: React.FC = () => {
 
     return (
         <React.Fragment>
-            {!currentRoom &&
+            {currentRoom &&
             <div className="container-fluid w-25 my-5">
 
                 <Form>
-                    <h3 className="font-weight-bold ml-5">Hello, dear :)</h3>
                     <Form.Group>
-                        <Form.Label className='h5'>Create a new room</Form.Label>
+                        <Form.Label className='h6'>Create a new room</Form.Label>
                         <Form.Row>
                             <Col>
                                 <Form.Control
@@ -31,13 +30,13 @@ const enterRoom: React.FC = () => {
                                 />
                             </Col>
                             <Col>
-                                <Button className="color-primary" type="submit"
+                                <Button className="btn-secondary" type="submit"
                                         onClick={() => dispatch(createRoom(roomName))}>Create</Button>
                             </Col>
                         </Form.Row>
                     </Form.Group>
                     <Form.Group>
-                        <Form.Label className='h5'>Join a room</Form.Label>
+                        <Form.Label className='h6'>Join a room</Form.Label>
                         <Form.Row>
                             <Col>
                                 <Form.Control
@@ -48,7 +47,7 @@ const enterRoom: React.FC = () => {
                                 />
                             </Col>
                             <Col>
-                                <Button className="color-primary" type="submit"
+                                <Button className="btn-secondary" type="submit"
                                         onClick={() => dispatch(joinRoom(roomId))}>Join</Button>
                             </Col>
                         </Form.Row>
@@ -57,11 +56,11 @@ const enterRoom: React.FC = () => {
             </div>
             }
 
-            {currentRoom &&
+            {!currentRoom &&
             <LoginForm/>
             }
         </React.Fragment>
     );
 }
 
-export default enterRoom;
+export default RoomForm;

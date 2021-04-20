@@ -5,7 +5,8 @@ import {Home} from "./Home";
 import {NotFound} from "./NotFound";
 import {SignUp} from "./SignUp";
 import Routes from "./routes";
-import enterRoom from "../components/Room/Room";
+import {Room} from "./Room";
+import {Chat} from "./Chat";
 
 export const Router: React.FC = () => {
     return(
@@ -15,7 +16,8 @@ export const Router: React.FC = () => {
                     <Route exact path="/" component={Home}/>
                     <Route exact path={Routes.LOGIN} component={Login}/>
                     <Route exact path={Routes.SIGNUP} component={SignUp}/>
-                    <Route exact path={Routes.ENTERROOM} component={enterRoom}/>
+                    <Route exact path={Routes.ENTERROOM} component={Room}/>
+                    <Route exact path='/chat' component={Chat}/>
                     <Route component={NotFound}/>
                 </Switch>
             </React.Suspense>
