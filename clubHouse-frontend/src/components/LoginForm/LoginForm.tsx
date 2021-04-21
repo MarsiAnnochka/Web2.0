@@ -33,7 +33,7 @@ const LoginForm: React.FC = () => {
                         value={password}
                     />
                 </Form.Group>
-                <Button className="btn-secondary" type="submit"
+                <Button className="btn-secondary"
                         onClick={() => dispatch(loginUser({login, password}))}>
                     Enter Room
                 </Button>
