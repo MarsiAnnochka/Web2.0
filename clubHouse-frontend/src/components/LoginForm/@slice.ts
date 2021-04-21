@@ -15,7 +15,7 @@ export interface LoginFormState {
 export interface Response {
     type: string;
     message: {
-        token: string;
+        access_token: string;
     }
 }
 
@@ -56,7 +56,7 @@ export const loginFormSlice = createSlice({
                 state.loading = 'succeeded';
                 state.password = '';
                 state.login = '';
-                localStorage.setItem('token', action.payload.message.token); //сохраняем в браузере ответ
+                localStorage.setItem('access_token', action.payload.message.access_token); //сохраняем в браузере ответ
             })
     }
 })
