@@ -40,8 +40,13 @@ export class UsersService {
       statusCode: 200,
       message: ['User created!'],
     };*/
+    console.log(createUserDto);
     const user = new Users;
     user.name = createUserDto.username;
+    user.first_name = createUserDto.first_name;
+    user.last_name = createUserDto.last_name;
+    user.email = createUserDto.email;
+    user.city = createUserDto.city;
     user.password = await bcrypt.hash(createUserDto.password,10);
     await this.usersRepository.save(user);
     return {

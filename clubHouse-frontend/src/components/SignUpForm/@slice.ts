@@ -61,16 +61,16 @@ export const SignUpFormSlice = createSlice({
             state.password = action.payload
         },
         enterFirstName: (state, action: PayloadAction<string>) => {
-            state.password = action.payload
+            state.firstName = action.payload
         },
         enterLastName: (state, action: PayloadAction<string>) => {
-            state.password = action.payload
+            state.lastName = action.payload
         },
         enterEmail: (state, action: PayloadAction<string>) => {
-            state.password = action.payload
+            state.email = action.payload
         },
         enterCity: (state, action: PayloadAction<string>) => {
-            state.password = action.payload
+            state.city = action.payload
         }
     },
     //"builder callback API", для асинхронных операций
