@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
+
 export interface Form {
     login: string;
     password: string;
@@ -46,8 +47,20 @@ export const signUpUser = createAsyncThunk(
             }),
             method: 'POST',
         };
-        const response = await fetch('/api/signup/', postOptions);
-        return await (response.json()) as Response;
+        try {
+            const response = await fetch('/api/signup/', postOptions);
+            if(!response.ok) {
+                console.log(response.ok);
+                return thunkAPI.rejectWithValue(response.ok);
+            }
+            else {
+                return await (response.json()) as Response;
+            }
+        } catch (err){
+            alert('Something went wrong.. Try it again')
+            console.log("Error: ", err.message);
+            return thunkAPI.rejectWithValue(err.response.ok);
+        }
     })
 
 export const SignUpFormSlice = createSlice({
@@ -71,7 +84,8 @@ export const SignUpFormSlice = createSlice({
         },
         enterCity: (state, action: PayloadAction<string>) => {
             state.city = action.payload
-        }
+        },
+
     },
     //"builder callback API", для асинхронных операций
     extraReducers: builder => {

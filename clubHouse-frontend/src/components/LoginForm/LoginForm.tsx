@@ -1,14 +1,32 @@
 import * as React from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {enterLogin, enterPassword, loginUser} from './@slice';
+import {useEffect} from "react";
+import {Redirect, useHistory} from 'react-router-dom';
+import {defaultState} from './@slice';
 import {Form, Button} from "react-bootstrap";
 
 const LoginForm: React.FC = () => {
     const login = useAppSelector(state => state.loginForm.login);
     const password = useAppSelector(state => state.loginForm.password);
-    const status = useAppSelector(state => state.loginForm.loading)
-    //<div>{status}</div>
+    const isAuth = useAppSelector(state => state.loginForm.isAuth);
     const dispatch = useAppDispatch();
+    const history = useHistory();
+
+    useEffect(() => {
+        if (isAuth) {
+            dispatch(defaultState());
+            history.push('/');
+        }
+    }, [isAuth]);
+
+    const submit = () => {
+        dispatch(loginUser({login, password}))
+        if (!isAuth) {
+        } else {
+            return <Redirect to={'/chat'}/>
+        }
+    }
 
     return (
         <div className="container-fluid w-25 my-5">
@@ -33,8 +51,9 @@ const LoginForm: React.FC = () => {
                         value={password}
                     />
                 </Form.Group>
+
                 <Button className="btn-secondary"
-                        onClick={() => dispatch(loginUser({login, password}))}>
+                        onClick={submit}>
                     Enter Room
                 </Button>
             </Form>
