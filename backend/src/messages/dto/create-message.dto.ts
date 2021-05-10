@@ -3,9 +3,9 @@ import {IsNotEmpty} from "class-validator";
 
 export class CreateMessageDto {
     @ApiProperty() @IsNotEmpty()
-    from: string;
+    from: number;
     @ApiProperty() @IsNotEmpty()
-    to: string;
+    to: number;
     @ApiProperty() @IsNotEmpty()
     payload: string;
 }
