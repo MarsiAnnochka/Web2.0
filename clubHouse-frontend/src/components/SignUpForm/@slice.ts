@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { fetchData } from '../../utils/API';
 
 export interface Form {
     login: string;
@@ -46,7 +47,7 @@ export const signUpUser = createAsyncThunk(
             }),
             method: 'POST',
         };
-        const response = await fetch('/api/signup/', postOptions);
+        const response = await fetchData('/api/signup/', postOptions);
         return await (response.json()) as Response;
     })
 

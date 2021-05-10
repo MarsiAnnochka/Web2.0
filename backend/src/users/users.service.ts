@@ -4,11 +4,13 @@ import { Users } from './entities/users.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(Users) private readonly usersRepository: Repository<Users>,
+    private jwtService: JwtService
   ) {}
 
   async findOne(username: string): Promise<Users | undefined> {
@@ -23,24 +25,6 @@ export class UsersService {
   }
 
   async createUser(createUserDto: CreateUserDto) {
-    /*
-    try {
-      const user = await this.usersRepository.create(createUserDto);
-      user.password = await bcrypt.hash(user.password,10);
-      await this.usersRepository.save(user);
-    }
-    catch (e) {
-      return {
-        statusCode: 500,
-        message: ['Something went wrong!'],
-        error: 'Bad Request',
-      }
-    }
-    return {
-      statusCode: 200,
-      message: ['User created!'],
-    };*/
-    console.log(createUserDto);
     const user = new Users;
     user.name = createUserDto.username;
     user.first_name = createUserDto.first_name;
@@ -49,9 +33,13 @@ export class UsersService {
     user.city = createUserDto.city;
     user.password = await bcrypt.hash(createUserDto.password,10);
     await this.usersRepository.save(user);
+    const payload = { username: user.name, sub: user.id };
     return {
-      statusCode: 200,
-      message: ['User created!'],
+      type: "success",
+      message:
+          {
+             token: this.jwtService.sign(payload)
+          }
     };
   }
 }
