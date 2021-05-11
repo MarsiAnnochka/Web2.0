@@ -7,12 +7,12 @@ import { AuthService } from './auth.service';
 @Controller()
 export class AuthController {
   constructor(private authService: AuthService) {}
-
+/*
   @ApiTags('Login')
   @HttpCode(200)
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Body() loginUserDto: LoginUserDto, @Request() req) {
     return this.authService.login(req.user);
-  }
+  }*/
 }
