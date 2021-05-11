@@ -13,12 +13,6 @@ const LoginForm: React.FC = () => {
     const dispatch = useAppDispatch();
     const history = useHistory();
 
-    useEffect(() => {
-        if (isAuth) {
-            dispatch(defaultState());
-            history.push('/');
-        }
-    }, [isAuth]);
 
     const submit = () => {
         dispatch(loginUser({login, password}))

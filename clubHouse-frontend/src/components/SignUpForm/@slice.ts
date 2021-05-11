@@ -1,4 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { fetchData } from '../../utils/API';
 
 
 export interface Form {
@@ -48,7 +49,7 @@ export const signUpUser = createAsyncThunk(
             method: 'POST',
         };
         try {
-            const response = await fetch('/api/signup/', postOptions);
+            const response = await fetchData('/api/signup/', postOptions);
             if(!response.ok) {
                 console.log(response.ok);
                 return thunkAPI.rejectWithValue(response.ok);
