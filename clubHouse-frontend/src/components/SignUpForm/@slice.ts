@@ -1,7 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {fetchData} from '../../utils/API';
 
-
 export interface Form {
     login: string;
     password: string;
