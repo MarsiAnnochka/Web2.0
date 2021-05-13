@@ -9,6 +9,7 @@ import {JwtModule} from "@nestjs/jwt";
 import {LocalStrategy} from "../auth/local.strategy";
 import {JwtStrategy} from "../auth/jwt.strategy";
 import {AuthService} from "../auth/auth.service";
+import { EventEmitterModule} from '@nestjs/event-emitter'
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import {AuthService} from "../auth/auth.service";
     MessagesModule,
     PassportModule,
     ConfigModule.forRoot({ isGlobal: true}),
+    EventEmitterModule.forRoot(),
     JwtModule.register({
       secret: process.env.SECRET,
       signOptions: { expiresIn: process.env.EXPIRESIN },

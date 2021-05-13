@@ -1,4 +1,4 @@
-import {Controller, Request, Post, UseGuards, Body, Get, Param} from '@nestjs/common';
+import {Controller, Request, Post, UseGuards, Body, Get, Param, HttpCode} from '@nestjs/common';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { ApiTags } from '@nestjs/swagger';
@@ -11,6 +11,7 @@ export class AppController {
     constructor(private authService: AuthService, private messagesService: MessagesService) {}
 
     @ApiTags('Login')
+    @HttpCode(200)
     @UseGuards(LocalAuthGuard)
     @Post('login')
     async login(@Body() loginUserDto: LoginUserDto, @Request() req) {
@@ -37,4 +38,5 @@ export class AppController {
     getMessages(@Request() req, @Param() param) {
         return this.messagesService.findMessages(req.user.id, param.id);
     }
+
 }

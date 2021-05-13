@@ -4,12 +4,15 @@ import { Messages } from './entities/messages.entity';
 import {Repository, SelectQueryBuilder} from 'typeorm';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { JwtService } from '@nestjs/jwt';
+import { EventEmitter2 } from '@nestjs/event-emitter'
+import {MessageCreatedEvent} from "./events/message-created.event";
 
 @Injectable()
 export class MessagesService {
   constructor(
     @InjectRepository(Messages) private readonly messagesRepository: Repository<Messages>,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private eventEmitter: EventEmitter2
   ) {}
 
   async findChats(user: number): Promise<SelectQueryBuilder<Messages>> {
@@ -38,6 +41,7 @@ export class MessagesService {
     message.to= createMessageDto.to;
     message.payload = createMessageDto.payload;
     await this.messagesRepository.save(message);
+    /*
     return {
       type: "success",
       message:
@@ -47,6 +51,7 @@ export class MessagesService {
             payload: message.payload
           }
     };
+     */
   }
 
 }

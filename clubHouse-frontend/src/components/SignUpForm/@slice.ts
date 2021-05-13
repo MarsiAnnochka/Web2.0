@@ -48,10 +48,8 @@ export const signUpUser = createAsyncThunk(
             }),
             method: 'POST',
         };
-<<<<<<< HEAD
         const response = await fetchData('/api/signup/', postOptions);
         return await (response.json()) as Response;
-=======
         try {
             const response = await fetchData('/api/signup/', postOptions);
             if(!response.ok) {
@@ -66,7 +64,6 @@ export const signUpUser = createAsyncThunk(
             console.log("Error: ", err.message);
             return thunkAPI.rejectWithValue(err.response.ok);
         }
->>>>>>> 3b82bd4bd6551dac11813074e410e9c796c826bf
     })
 
 export const SignUpFormSlice = createSlice({
