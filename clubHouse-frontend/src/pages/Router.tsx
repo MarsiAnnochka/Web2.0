@@ -9,6 +9,7 @@ import {Room} from "./Room";
 import {Chat} from "./Chat";
 import {Redirect} from 'react-router-dom';
 import {useAppSelector} from "../hooks";
+import LongPolling from '../components/LongPolling/LongPolling';
 
 export const Router: React.FC = () => {
     const isAuth = useAppSelector(state => state.loginForm.isAuth);
@@ -19,13 +20,15 @@ export const Router: React.FC = () => {
             <React.Suspense fallback={<div/>}>
                 <Switch>
                     <Route exact path="/" component={Home}/>
+                    {/*<Route exact path={Routes.LOGIN}*/}
+                    {/*       component={() => (!isAuth) ? <Login/> : <Redirect to={Routes.CHAT}/>}/>*/}
                     <Route exact path={Routes.LOGIN}
-                           component={() => (!isAuth) ? <Login/> : <Redirect to={Routes.CHAT}/>}/>
+                           component={() => (!isAuth) ? <Login/> : <Redirect to={'/test'}/>}/>
                     <Route exact path={Routes.SIGNUP}
                            component={() => (!isSignUp) ? <SignUp/> : <Redirect to={Routes.LOGIN}/>}/>
                     <Route exact path={Routes.ENTERROOM} component={Room}/>
                     <Route exact path={Routes.CHAT} component={Chat}/>
-                    {/*<Route exact path='/longpulling' component={LongPulling}/>*/}
+                    <Route exact path='/test' component={LongPolling}/>
                     <Route component={NotFound}/>
                 </Switch>
             </React.Suspense>
