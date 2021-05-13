@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { fetchData } from '../../utils/API';
+import {fetchData} from '../../utils/API';
 
 
 export interface Form {
@@ -18,7 +18,8 @@ export interface SignUpFormState {
     lastName: string;
     email: string;
     city: string;
-    loading: 'idle' | 'pending' | 'succeeded' | 'failed'
+    loading: 'idle' | 'pending' | 'succeeded' | 'failed';
+    isSignUp: boolean;
 }
 
 export interface Response {
@@ -35,7 +36,8 @@ const initialState: SignUpFormState = {
     lastName: '',
     email: '',
     city: '',
-    loading: 'idle'
+    loading: 'idle',
+    isSignUp: false
 }
 
 export const signUpUser = createAsyncThunk(
@@ -48,25 +50,17 @@ export const signUpUser = createAsyncThunk(
             }),
             method: 'POST',
         };
-<<<<<<< HEAD
-        const response = await fetchData('/api/signup/', postOptions);
-        return await (response.json()) as Response;
-=======
         try {
             const response = await fetchData('/api/signup/', postOptions);
-            if(!response.ok) {
-                console.log(response.ok);
-                return thunkAPI.rejectWithValue(response.ok);
-            }
-            else {
+            if (response.ok === true) {
+                console.log('Successful registration')
+            } else {
                 return await (response.json()) as Response;
             }
-        } catch (err){
+        } catch (err) {
             alert('Something went wrong.. Try it again')
             console.log("Error: ", err.message);
-            return thunkAPI.rejectWithValue(err.response.ok);
         }
->>>>>>> 3b82bd4bd6551dac11813074e410e9c796c826bf
     })
 
 export const SignUpFormSlice = createSlice({
@@ -91,7 +85,9 @@ export const SignUpFormSlice = createSlice({
         enterCity: (state, action: PayloadAction<string>) => {
             state.city = action.payload
         },
-
+        isSignUp: (state) => {
+            state.isSignUp = true;
+        }
     },
     //"builder callback API", для асинхронных операций
     extraReducers: builder => {
@@ -106,6 +102,7 @@ export const SignUpFormSlice = createSlice({
                 state.lastName = '';
                 state.email = '';
                 state.city = '';
+                state.isSignUp = true;
                 localStorage.setItem('token', action.payload.message.token); //сохраняем в браузере ответ
             })
     }

@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { fetchData } from '../../utils/API';
+import {fetchData} from '../../utils/API';
 
 export interface Form {
     login: string;
@@ -36,19 +36,15 @@ export const loginUser = createAsyncThunk(
         };
         try {
             const response = await fetchData('/api/login/', postOptions);
-            if(!response.ok) {
-                console.log(response.ok);
-                return thunkAPI.rejectWithValue(response.ok);
-            }
-            else {
+            if (response.ok === false) {
+                alert('The data is incorrect :( Try it again')
+            } else {
                 return await (response.json()) as Response;
             }
-        } catch (err){
-            alert('The data is incorrect :( Try it again')
+        } catch (err) {
             console.log("Error: ", err.message);
-            return thunkAPI.rejectWithValue(err.response.ok);
         }
-        })
+    })
 
 export const loginFormSlice = createSlice({
     name: 'login',
@@ -61,9 +57,7 @@ export const loginFormSlice = createSlice({
             state.password = action.payload
         },
         isAuth: (state) => {
-            console.log(state.isAuth);
             state.isAuth = true;
-            console.log(state.isAuth)
         },
         defaultState: (state) => {
             state.isAuth = false;
@@ -75,13 +69,13 @@ export const loginFormSlice = createSlice({
         builder.addCase(loginUser.pending, (state, action) => {
             state.loading = 'pending'
         })
-            builder.addCase(loginUser.fulfilled, (state, action) => {
-                state.loading = 'succeeded';
-                state.password = '';
-                state.login = '';
-                state.isAuth = true;
-                localStorage.setItem('access_token', action.payload.message.access_token); //сохраняем в браузере ответ
-            })
+        builder.addCase(loginUser.fulfilled, (state, action) => {
+            state.loading = 'succeeded';
+            state.password = '';
+            state.login = '';
+            state.isAuth = true;
+            localStorage.setItem('access_token', action.payload.message.access_token); //сохраняем в браузере ответ
+        })
     }
 })
 

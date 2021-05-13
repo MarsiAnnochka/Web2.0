@@ -1,6 +1,8 @@
 enum Routes {
     LOGIN = '/login',
     SIGNUP = '/signup',
-    ENTERROOM ='/room'
+    ENTERROOM = '/room',
+    CHAT = '/chat'
 }
+
 export default Routes;

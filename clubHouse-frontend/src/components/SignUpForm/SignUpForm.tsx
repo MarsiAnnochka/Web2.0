@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {Form, Button, Col} from "react-bootstrap";
-import {Redirect} from "react-router-dom";
 import {enterCity, enterFirstName, enterLastName, enterLogin, enterPassword, enterEmail, signUpUser} from './@slice';
 
 const SignUpForm: React.FC = () => {
@@ -12,11 +11,6 @@ const SignUpForm: React.FC = () => {
     const email = useAppSelector(state => state.signUpForm.email);
     const city = useAppSelector(state => state.signUpForm.city);
     const dispatch = useAppDispatch();
-
-    const submit = () => {
-        dispatch(signUpUser({login, password, firstName, lastName, email, city}))
-        return <Redirect to={'/login'}/>
-    }
 
     return (
         <div className="container-fluid w-25 my-5">
@@ -88,10 +82,9 @@ const SignUpForm: React.FC = () => {
                 </Form.Row>
 
                 <Button className="btn-secondary"
-                        onClick={submit}>
+                        onClick={() => dispatch(signUpUser({login, password, firstName, lastName, email, city}))}>
                     Sign Up
                 </Button>
-
             </Form>
         </div>
     )

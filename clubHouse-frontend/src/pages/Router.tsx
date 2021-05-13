@@ -7,17 +7,25 @@ import {SignUp} from "./SignUp";
 import Routes from "./routes";
 import {Room} from "./Room";
 import {Chat} from "./Chat";
+import {Redirect} from 'react-router-dom';
+import {useAppSelector} from "../hooks";
 
 export const Router: React.FC = () => {
-    return(
+    const isAuth = useAppSelector(state => state.loginForm.isAuth);
+    const isSignUp = useAppSelector(state => state.signUpForm.isSignUp);
+
+    return (
         <BrowserRouter>
             <React.Suspense fallback={<div/>}>
                 <Switch>
                     <Route exact path="/" component={Home}/>
-                    <Route exact path={Routes.LOGIN} component={Login}/>
-                    <Route exact path={Routes.SIGNUP} component={SignUp}/>
+                    <Route exact path={Routes.LOGIN}
+                           component={() => (!isAuth) ? <Login/> : <Redirect to={Routes.CHAT}/>}/>
+                    <Route exact path={Routes.SIGNUP}
+                           component={() => (!isSignUp) ? <SignUp/> : <Redirect to={Routes.LOGIN}/>}/>
                     <Route exact path={Routes.ENTERROOM} component={Room}/>
-                    <Route exact path='/chat' component={Chat}/>
+                    <Route exact path={Routes.CHAT} component={Chat}/>
+                    {/*<Route exact path='/longpulling' component={LongPulling}/>*/}
                     <Route component={NotFound}/>
                 </Switch>
             </React.Suspense>
