@@ -1,3 +1,3 @@
 export class MessageCreatedEvent{
-    message: stnirg;
+    message: string;
 }
