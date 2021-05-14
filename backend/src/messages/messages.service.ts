@@ -37,8 +37,10 @@ export class MessagesService {
 
   async createMessage(createMessageDto: CreateMessageDto) {
     const message = new Messages;
-    message.from = createMessageDto.from;
-    message.to= createMessageDto.to;
+    //message.from = createMessageDto.from;
+    //message.to= createMessageDto.to;
+    message.from = 1;
+    message.to = 2;
     message.payload = createMessageDto.payload;
     await this.messagesRepository.save(message);
     /*
