@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, Post, Req, Request, Res} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, Post, Req, Request, Res, Response} from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -30,8 +30,8 @@ export class MessagesController {
   @ApiTags('Get message')
   @Get('get-message')
   async handleEvent(@Req() request: Request){
-    this.eventEmitter.on('message.created', (message)=>{
-      return message;
+    this.eventEmitter.on('message.created', (messageCreatedEvent)=>{
+      return messageCreatedEvent.message;
     })
   }
 }

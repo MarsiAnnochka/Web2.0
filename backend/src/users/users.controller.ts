@@ -10,7 +10,7 @@ export class UsersController {
   }
 
   @Get('users')
-  async getAllUsers() {
+  async getAllUsers(): Promise<any> {
     return this.usersService.findAll();
   }
 
