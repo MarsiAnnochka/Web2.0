@@ -4,6 +4,7 @@ import {connectRouter} from "connected-react-router";
 import loginFormReducer from './components/LoginForm/@slice';
 import signUpFormReducer from './components/SignUpForm/@slice';
 import roomReducer from './components/RoomForm/@slice';
+import messageReducer from './components/LongPolling/@slice';
 
 export const history = createBrowserHistory();
 
@@ -13,7 +14,8 @@ const reducer = {
     router: connectRouter(history),
     loginForm: loginFormReducer,
     signUpForm: signUpFormReducer,
-    room: roomReducer
+    room: roomReducer,
+    message: messageReducer
 }
 
 export const store = configureStore({

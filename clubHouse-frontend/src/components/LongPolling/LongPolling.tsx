@@ -1,47 +1,16 @@
 import * as React from 'react';
 import {useEffect, useState} from "react";
-import {fetchData} from '../../utils/API';
-import {createAsyncThunk} from "@reduxjs/toolkit";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {enterMessage, sendMessage, subscribe} from "./@slice";
 
 const LongPolling: React.FC = () => {
     const [messages, setMessages] = useState([]);
-    const [value, setValue] = useState('')
+    const message = useAppSelector(state => state.message.message);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        subscribe()
+        dispatch(subscribe())
     }, [])
-
-    const subscribe = createAsyncThunk(
-        'get-messages',
-        async () => {
-            const postOptions = {
-                method: 'GET'
-            };
-            try {
-                const data = await fetchData('/get-messages', postOptions)
-                setMessages(prev => [data, ...prev])
-                await subscribe()
-            } catch (err) {
-                setTimeout(() => {
-                    subscribe()
-                }, 500)
-            }
-        }
-    )
-
-    const sendMessage = createAsyncThunk(
-        'new-messages',
-        async (data, thunkAPI) => {
-            const postOptions = {
-                body: {
-                    message: value,
-                    id: Date.now()
-                },
-                method: 'POST'
-            };
-            await fetchData('/new-messages', postOptions)
-        }
-    )
 
     return (
         <div className="wrapper">
@@ -71,11 +40,11 @@ const LongPolling: React.FC = () => {
             </div>
             <form>
                 <textarea
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
+                    value={message}
+                    onChange={(event) => dispatch(enterMessage(event.target.value))}
                     className="form-control"
                     rows={3}/>
-                <button type='button' className='btn btn-secondary' onClick={sendMessage}>
+                <button type='button' className='btn btn-secondary' onClick={()=>dispatch(sendMessage({message}))}>
                     Send
                 </button>
             </form>
