@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {enterMessage, sendMessage, subscribe} from "./@slice";
+import {sendMessage, subscribe} from "./@slice";
 
 const LongPolling: React.FC = () => {
-    const [messages, setMessages] = useState([]);
-    const message = useAppSelector(state => state.message.message);
+    const [value, setValue] = useState('')
+    const messages = useAppSelector(state => state.message.messages);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -26,25 +26,22 @@ const LongPolling: React.FC = () => {
                 <div className='chat-messages'>
                     <div className='messages'>
                         {
-                            messages.map((message) => (
-                                <div className="message" key={message.id}>
-                                    <p>{message.message}</p>
-                                    <div>
-                                        <span>{message.userName}</span>
-                                    </div>
+                            messages.map(message =>
+                                <div className="message">
+                                    <p>{message}</p>
                                 </div>
-                            ))
+                            )
                         }
                     </div>
                 </div>
             </div>
             <form>
                 <textarea
-                    value={message}
-                    onChange={(event) => dispatch(enterMessage(event.target.value))}
+                    value={value}
+                    onChange={(event) => setValue(event.target.value)}
                     className="form-control"
                     rows={3}/>
-                <button type='button' className='btn btn-secondary' onClick={()=>dispatch(sendMessage({message}))}>
+                <button type='button' className='btn btn-secondary' onClick={()=>dispatch(sendMessage({messages}))}>
                     Send
                 </button>
             </form>

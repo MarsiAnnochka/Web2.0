@@ -1,13 +1,12 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchData} from "../../utils/API";
-import {loginUser} from "../LoginForm/@slice";
 
 export interface Form {
-    message: string;
+    messages: string[];
 }
 
 export interface MessageState {
-    message: string;
+    messages: string[];
     loading: 'idle' | 'pending' | 'succeeded' | 'failed';
 }
 
@@ -19,7 +18,7 @@ export interface Response {
 }
 
 const initialState: MessageState = {
-    message: '',
+    messages: [],
     loading: 'idle',
 }
 
@@ -30,8 +29,7 @@ export const subscribe = createAsyncThunk(
             method: 'GET'
         };
         try {
-            const data = await fetchData('/api/get-message/', postOptions)
-            //setMessages(prev => [data, ...prev])
+            await fetchData('/api/get-message/', postOptions)
             await subscribe()
         } catch (err) {
             setTimeout(() => {
@@ -48,8 +46,7 @@ export const sendMessage = createAsyncThunk(
             body: JSON.stringify({
                 from: 1,
                 to: 2,
-                payload: data.message,
-                //id: Date.now()
+                payload: data.messages
             }),
             method: 'POST'
         };
@@ -62,17 +59,16 @@ export const messageSlice = createSlice({
         name: 'message',
         initialState,
         reducers: {
-            enterMessage: (state, action: PayloadAction<string>) => {
-                state.message = action.payload
+            enterMessage: (state, action: PayloadAction<string[]>) => {
+                state.messages = action.payload
             }
         },
         extraReducers: builder => {
-            builder.addCase(loginUser.pending, (state, action) => {
+            builder.addCase(sendMessage.pending, (state, action) => {
                 state.loading = 'pending'
             })
-            builder.addCase(loginUser.fulfilled, (state, action) => {
+            builder.addCase(sendMessage.fulfilled, (state, action) => {
                 state.loading = 'succeeded';
-                state.message = '';
                 localStorage.setItem('access_token', action.payload.message.access_token);
             })
         }
