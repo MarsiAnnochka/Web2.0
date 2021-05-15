@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {sendMessage, subscribe} from "./@slice";
+import {setMessages, sendMessage, subscribe} from "./@slice";
 
 const LongPolling: React.FC = () => {
     const [value, setValue] = useState('')
@@ -9,8 +9,12 @@ const LongPolling: React.FC = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(subscribe())
-    }, [])
+            dispatch(subscribe())
+            // async function Subscribe() {
+            //     dispatch(setMessages(messages))
+            //     await dispatch(subscribe())
+        }
+        , [])
 
     return (
         <div className="wrapper">
@@ -41,7 +45,7 @@ const LongPolling: React.FC = () => {
                     onChange={(event) => setValue(event.target.value)}
                     className="form-control"
                     rows={3}/>
-                <button type='button' className='btn btn-secondary' onClick={()=>dispatch(sendMessage({messages}))}>
+                <button type='button' className='btn btn-secondary' onClick={() => dispatch(sendMessage({messages}))}>
                     Send
                 </button>
             </form>

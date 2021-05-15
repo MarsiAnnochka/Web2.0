@@ -30,6 +30,7 @@ export const subscribe = createAsyncThunk(
         };
         try {
             await fetchData('/api/get-message/', postOptions)
+            // dispatch(setMessages())
             await subscribe()
         } catch (err) {
             setTimeout(() => {
@@ -59,7 +60,7 @@ export const messageSlice = createSlice({
         name: 'message',
         initialState,
         reducers: {
-            enterMessage: (state, action: PayloadAction<string[]>) => {
+            setMessages: (state, action: PayloadAction<string[]>) => {
                 state.messages = action.payload
             }
         },
@@ -69,11 +70,12 @@ export const messageSlice = createSlice({
             })
             builder.addCase(sendMessage.fulfilled, (state, action) => {
                 state.loading = 'succeeded';
+                state.messages = [];
                 localStorage.setItem('access_token', action.payload.message.access_token);
             })
         }
     }
 )
 
-export const {enterMessage} = messageSlice.actions;
+export const {setMessages} = messageSlice.actions;
 export default messageSlice.reducer;
