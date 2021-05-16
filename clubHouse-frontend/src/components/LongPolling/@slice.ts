@@ -34,9 +34,9 @@ export const subscribe = createAsyncThunk(
         try {
             const data = await fetchData('/api/get-message', postOptions)
             const message = (await data.json()).message
-            let Message = store.getState().message.messages
+            let Message = [...store.getState().message.messages, message]
             Message.push(message)
-            setMessages(message)
+            setMessages(Message)
             subscribe()
         } catch (err) {
             setTimeout(() => {
