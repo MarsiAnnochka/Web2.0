@@ -31,6 +31,7 @@ export class MessagesController {
   @Get('get-message')
   async handleEvent(@Req() request: Request){
     this.eventEmitter.on('message.created', (messageCreatedEvent)=>{
+      console.log(messageCreatedEvent.message);
       return messageCreatedEvent.message;
     })
   }
