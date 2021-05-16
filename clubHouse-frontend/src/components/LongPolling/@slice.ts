@@ -1,8 +1,10 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchData} from "../../utils/API";
+import {store} from "../../store";
+
 
 export interface Form {
-    messages: string[];
+    message: string;
 }
 
 export interface MessageState {
@@ -25,32 +27,38 @@ const initialState: MessageState = {
 export const subscribe = createAsyncThunk(
     'get-messages',
     async () => {
+        console.log('Hi')
         const postOptions = {
             method: 'GET'
         };
         try {
-            await fetchData('/api/get-message/', postOptions)
-            // dispatch(setMessages())
-            await subscribe()
+            const data = await fetchData('/api/get-message', postOptions)
+            const message = (await data.json()).message
+            let Message = store.getState().message.messages
+            Message.push(message)
+            setMessages(message)
+            subscribe()
         } catch (err) {
             setTimeout(() => {
                 subscribe()
             }, 500)
+            console.log('Error' + err)
         }
     }
 )
 
 export const sendMessage = createAsyncThunk(
     'new-messages',
-    async (data: Form, thunkAPI) => {
+    async (data: string, thunkAPI) => {
         const postOptions = {
             body: JSON.stringify({
                 from: 1,
                 to: 2,
-                payload: data.messages
+                payload: data
             }),
             method: 'POST'
         };
+        console.log(data)
         const response = await fetchData('/api/new-message/', postOptions);
         return await (response.json()) as Response;
     }

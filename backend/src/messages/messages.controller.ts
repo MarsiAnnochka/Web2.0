@@ -25,13 +25,16 @@ export class MessagesController {
     const messageCreatedEvent = new MessageCreatedEvent();
     messageCreatedEvent.message = createMessageDto.payload;
     this.eventEmitter.emit('message.created', messageCreatedEvent);
+      //console.log(createMessageDto)
   }
 
   @ApiTags('Get message')
   @Get('get-message')
-  async handleEvent(@Req() request: Request){
+  async handleEvent(@Req() request: Request, @Res() res){
     this.eventEmitter.on('message.created', (messageCreatedEvent)=>{
-      return messageCreatedEvent.message;
+      res.send({
+        message: messageCreatedEvent.message
+      });
     })
   }
 }

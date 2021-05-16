@@ -9,12 +9,8 @@ const LongPolling: React.FC = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-            dispatch(subscribe())
-            // async function Subscribe() {
-            //     dispatch(setMessages(messages))
-            //     await dispatch(subscribe())
-        }
-        , [])
+        dispatch(subscribe())
+    }, [])
 
     return (
         <div className="wrapper">
@@ -45,7 +41,7 @@ const LongPolling: React.FC = () => {
                     onChange={(event) => setValue(event.target.value)}
                     className="form-control"
                     rows={3}/>
-                <button type='button' className='btn btn-secondary' onClick={() => dispatch(sendMessage({messages}))}>
+                <button type='button' className='btn btn-secondary' onClick={() => dispatch(sendMessage(value))}>
                     Send
                 </button>
             </form>
