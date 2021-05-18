@@ -27,13 +27,13 @@ export class MessagesController {
     await this.messagesService.createMessage(createMessageDto);
     const messageCreatedEvent = new MessageCreatedEvent();
     messageCreatedEvent.message = createMessageDto.payload;
-      responses.forEach((res)=>{
-        res.send(messageCreatedEvent)
-      })
+    responses.forEach((res)=>{
+      res.send(messageCreatedEvent)
+    })
     responses = [];
     return messageCreatedEvent
     //res.status = 200;
-      //console.log(createMessageDto)
+    //console.log(createMessageDto)
   }
 
   @ApiTags('Get message')

@@ -1,19 +1,15 @@
 import * as React from 'react';
 import {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {setMessages, sendMessage, subscribe} from "./@slice";
-import {PayloadAction} from "@reduxjs/toolkit";
+import {sendMessage, getMessage} from "./@slice";
 
 const LongPolling: React.FC = () => {
     const [value, setValue] = useState('')
-    const messages = useAppSelector(state => state.message.messages);
+    const messages = useAppSelector(state => state.message.message);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        const setter = (value: string[]) => {
-            dispatch(setMessages(value));
-        }
-        dispatch(subscribe(setter))
+        dispatch(getMessage())
     }, [])
 
     return (

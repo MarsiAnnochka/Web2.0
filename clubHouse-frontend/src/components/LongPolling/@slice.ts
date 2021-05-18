@@ -2,13 +2,16 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchData} from "../../utils/API";
 import {store} from "../../store";
 
-
 export interface Form {
-    message: string;
+    messages: string[];
+}
+
+export interface smsArray {
+    sms_array : Form;
 }
 
 export interface MessageState {
-    messages: string[];
+    message: string[];
     loading: 'idle' | 'pending' | 'succeeded' | 'failed';
 }
 
@@ -20,13 +23,13 @@ export interface Response {
 }
 
 const initialState: MessageState = {
-    messages: [],
+    message: [],
     loading: 'idle',
 }
 
-export const subscribe = createAsyncThunk(
+export const getMessage = createAsyncThunk(
     'get-messages',
-    async (setter: any,thunkAPI) => {
+    async () => {
         console.log('Hi')
 
         const postOptions = {
@@ -36,17 +39,13 @@ export const subscribe = createAsyncThunk(
             try {
                 console.log("STARTED")
                 const data = await fetchData('/api/get-message', postOptions)
-                const message = (await data.json()).message
-                let Message = [...store.getState().message.messages, message]
-                console.log(store.getState());
-                setter(Message);
+                const messages = (await data.json()).sms_array
+                console.log(messages);
                 console.log("FINISHED");
-
             } catch (err) {
                 /*setTimeout(() => {
                     subscribe()
                 }, 500)
-
                  */
                 console.log('Error' + err)
             }
@@ -56,18 +55,17 @@ export const subscribe = createAsyncThunk(
 
 export const sendMessage = createAsyncThunk(
     'new-messages',
-    async (data: string, thunkAPI) => {
+    async (message: string, thunkAPI) => {
         const postOptions = {
             body: JSON.stringify({
-                from: 1,
-                to: 2,
-                payload: data
+                payload: message
             }),
             method: 'POST'
         };
-        console.log(data)
+        console.log(message)
         const response = await fetchData('/api/new-message/', postOptions);
         return await (response.json()) as Response;
+
     }
 )
 
@@ -77,9 +75,9 @@ export const messageSlice = createSlice({
         reducers: {
             setMessages: (state, action: PayloadAction<string[]>) => {
                 // console.log("Wwwww");
-                state.messages = action.payload;
+                state.message = action.payload;
                 // console.log('state: ',state);
-                // console.log('state. nessages ', state.messages)
+                // console.log('state.message': state.message)
             }
         },
         extraReducers: builder => {
@@ -88,7 +86,7 @@ export const messageSlice = createSlice({
             })
             builder.addCase(sendMessage.fulfilled, (state, action) => {
                 state.loading = 'succeeded';
-                state.messages = [];
+                state.message = [];
                 localStorage.setItem('access_token', action.payload.message.access_token);
             })
         }

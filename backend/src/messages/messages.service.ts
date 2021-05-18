@@ -32,7 +32,7 @@ export class MessagesService {
   }
 
   async findAll(): Promise<Messages[]> {
-    return this.messagesRepository.find();
+    return await this.messagesRepository.find();
   }
 
   async createMessage(createMessageDto: CreateMessageDto) {
