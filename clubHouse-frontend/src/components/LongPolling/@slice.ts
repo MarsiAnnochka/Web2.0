@@ -26,23 +26,30 @@ const initialState: MessageState = {
 
 export const subscribe = createAsyncThunk(
     'get-messages',
-    async () => {
+    async (setter: any,thunkAPI) => {
         console.log('Hi')
+
         const postOptions = {
             method: 'GET'
         };
-        try {
-            const data = await fetchData('/api/get-message', postOptions)
-            const message = (await data.json()).message
-            let Message = [...store.getState().message.messages, message]
-            Message.push(message)
-            setMessages(Message)
-            subscribe()
-        } catch (err) {
-            setTimeout(() => {
-                subscribe()
-            }, 500)
-            console.log('Error' + err)
+        while(true) {
+            try {
+                console.log("STARTED")
+                const data = await fetchData('/api/get-message', postOptions)
+                const message = (await data.json()).message
+                let Message = [...store.getState().message.messages, message]
+                console.log(store.getState());
+                setter(Message);
+                console.log("FINISHED");
+
+            } catch (err) {
+                /*setTimeout(() => {
+                    subscribe()
+                }, 500)
+
+                 */
+                console.log('Error' + err)
+            }
         }
     }
 )
@@ -69,7 +76,10 @@ export const messageSlice = createSlice({
         initialState,
         reducers: {
             setMessages: (state, action: PayloadAction<string[]>) => {
-                state.messages = action.payload
+                // console.log("Wwwww");
+                state.messages = action.payload;
+                // console.log('state: ',state);
+                // console.log('state. nessages ', state.messages)
             }
         },
         extraReducers: builder => {

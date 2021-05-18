@@ -56,4 +56,8 @@ export class MessagesService {
      */
   }
 
+  async getMessage(message: string){
+    return {message: message}
+  }
+
 }
