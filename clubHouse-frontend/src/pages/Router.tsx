@@ -20,10 +20,10 @@ export const Router: React.FC = () => {
             <React.Suspense fallback={<div/>}>
                 <Switch>
                     <Route exact path="/" component={Home}/>
-                    {/*<Route exact path={Routes.LOGIN}*/}
-                    {/*       component={() => (!isAuth) ? <Login/> : <Redirect to={Routes.CHAT}/>}/>*/}
                     <Route exact path={Routes.LOGIN}
-                           component={() => (!isAuth) ? <Login/> : <Redirect to={'/test'}/>}/>
+                           component={() => (!isAuth) ? <Login/> : <Redirect to={Routes.CHAT}/>}/>
+                    {/*<Route exact path={Routes.LOGIN}*/}
+                    {/*       component={() => (!isAuth) ? <Login/> : <Redirect to={'/test'}/>}/>*/}
                     <Route exact path={Routes.SIGNUP}
                            component={() => (!isSignUp) ? <SignUp/> : <Redirect to={Routes.LOGIN}/>}/>
                     <Route exact path={Routes.ENTERROOM} component={Room}/>

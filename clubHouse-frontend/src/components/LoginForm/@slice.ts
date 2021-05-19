@@ -64,7 +64,6 @@ export const loginFormSlice = createSlice({
             state.loading = 'idle';
         },
     },
-    //"builder callback API", для асинхронных операций
     extraReducers: builder => {
         builder.addCase(loginUser.pending, (state, action) => {
             state.loading = 'pending'
