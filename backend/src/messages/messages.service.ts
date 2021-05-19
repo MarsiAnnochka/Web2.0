@@ -31,8 +31,30 @@ export class MessagesService {
         .limit(10);
   }
 
-  async findAll(): Promise<Messages[]> {
-    return await this.messagesRepository.find();
+  async findAll() {
+    const mes = await this.messagesRepository
+        .createQueryBuilder("messages")
+        .select("payload")
+        //.select('"from", "payload", "date"')
+        .orderBy("date")
+        .limit(10)
+        .getRawMany();
+    const result = [];
+    mes.map((message)=>{
+      /*const obj = {
+        payload: message.payload,
+        from: message.from,
+        date: message.date
+      }
+      result.push(obj);
+       */
+      result.push(message.payload)
+    })
+    return {
+      type: "success",
+      sms_array: result
+    }
+    //this.messagesRepository.find();
   }
 
   async createMessage(createMessageDto: CreateMessageDto) {

@@ -27,8 +27,10 @@ export class MessagesController {
     await this.messagesService.createMessage(createMessageDto);
     const messageCreatedEvent = new MessageCreatedEvent();
     messageCreatedEvent.message = createMessageDto.payload;
+    const messages = await this.messagesService.findAll();
+    console.log(messages)
     responses.forEach((res)=>{
-      res.send(messageCreatedEvent)
+      res.send(messages)
     })
     responses = [];
     return messageCreatedEvent
