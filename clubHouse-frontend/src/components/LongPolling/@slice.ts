@@ -41,7 +41,7 @@ export const getMessage = createAsyncThunk(
                 console.log("FINISHED");
             } catch (err) {
                 /*setTimeout(() => {
-                    subscribe()
+                    getMessage()
                 }, 500)
                  */
                 console.log('Error' + err)
@@ -82,6 +82,13 @@ export const messageSlice = createSlice({
                 state.loading = 'succeeded';
                 state.message = [];
                 localStorage.setItem('access_token', action.payload.message.access_token);
+            })
+            builder.addCase(getMessage.pending, (state, action) => {
+                state.loading = 'pending'
+            })
+            builder.addCase(getMessage.fulfilled, (state, action) => {
+                state.loading = 'succeeded';
+                state.message = [];
             })
         }
     }
