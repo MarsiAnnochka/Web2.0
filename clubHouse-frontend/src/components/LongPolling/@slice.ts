@@ -1,13 +1,12 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchData} from "../../utils/API";
-import {store} from "../../store";
 
 export interface Form {
     messages: string[];
 }
 
 export interface smsArray {
-    sms_array : Form;
+    sms_array: Form;
 }
 
 export interface MessageState {
@@ -30,12 +29,10 @@ const initialState: MessageState = {
 export const getMessage = createAsyncThunk(
     'get-messages',
     async () => {
-        console.log('Hi')
-
         const postOptions = {
             method: 'GET'
         };
-        while(true) {
+        while (true) {
             try {
                 console.log("STARTED")
                 const data = await fetchData('/api/get-message', postOptions)
@@ -74,10 +71,7 @@ export const messageSlice = createSlice({
         initialState,
         reducers: {
             setMessages: (state, action: PayloadAction<string[]>) => {
-                // console.log("Wwwww");
                 state.message = action.payload;
-                // console.log('state: ',state);
-                // console.log('state.message': state.message)
             }
         },
         extraReducers: builder => {
