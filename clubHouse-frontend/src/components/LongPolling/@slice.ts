@@ -11,6 +11,7 @@ export interface smsArray {
 
 export interface MessageState {
     message: string[];
+    sms_array: string[],
     loading: 'idle' | 'pending' | 'succeeded' | 'failed';
 }
 
@@ -23,6 +24,7 @@ export interface Response {
 
 const initialState: MessageState = {
     message: [],
+    sms_array: [],
     loading: 'idle',
 }
 
@@ -40,10 +42,6 @@ export const getMessage = createAsyncThunk(
                 console.log(messages);
                 console.log("FINISHED");
             } catch (err) {
-                /*setTimeout(() => {
-                    getMessage()
-                }, 500)
-                 */
                 console.log('Error' + err)
             }
         }
@@ -62,7 +60,6 @@ export const sendMessage = createAsyncThunk(
         console.log(message)
         const response = await fetchData('/api/new-message/', postOptions);
         return await (response.json()) as Response;
-
     }
 )
 
@@ -72,6 +69,7 @@ export const messageSlice = createSlice({
         reducers: {
             setMessages: (state, action: PayloadAction<string[]>) => {
                 state.message = action.payload;
+                state.loading = 'succeeded'
             }
         },
         extraReducers: builder => {
