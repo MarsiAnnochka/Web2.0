@@ -1,17 +1,8 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchData} from "../../utils/API";
 
-export interface Form {
-    messages: string[];
-}
-
 export interface smsArray {
-    sms_array: Form;
-}
-
-export interface MessageState {
-    message: string[];
-    sms_array: string[],
+    sms_array: string[];
     loading: 'idle' | 'pending' | 'succeeded' | 'failed';
 }
 
@@ -22,8 +13,7 @@ export interface Response {
     }
 }
 
-const initialState: MessageState = {
-    message: [],
+const initialState: smsArray = {
     sms_array: [],
     loading: 'idle',
 }
@@ -39,7 +29,7 @@ export const getMessage = createAsyncThunk(
                 console.log("STARTED")
                 const data = await fetchData('/api/get-message', postOptions)
                 const messages = (await data.json()).sms_array
-                console.log(messages);
+                console.log('getMessage:', messages);
                 console.log("FINISHED");
             } catch (err) {
                 console.log('Error' + err)
@@ -57,9 +47,11 @@ export const sendMessage = createAsyncThunk(
             }),
             method: 'POST'
         };
-        console.log(message)
+        console.log('sendMessage:', message)
         const response = await fetchData('/api/new-message/', postOptions);
-        return await (response.json()) as Response;
+        const data = (await response.json()).message
+        console.log('response:', data)
+        return await data;
     }
 )
 
@@ -68,7 +60,7 @@ export const messageSlice = createSlice({
         initialState,
         reducers: {
             setMessages: (state, action: PayloadAction<string[]>) => {
-                state.message = action.payload;
+                state.sms_array = action.payload;
                 state.loading = 'succeeded'
             }
         },
@@ -78,15 +70,14 @@ export const messageSlice = createSlice({
             })
             builder.addCase(sendMessage.fulfilled, (state, action) => {
                 state.loading = 'succeeded';
-                state.message = [];
-                localStorage.setItem('access_token', action.payload.message.access_token);
+                state.sms_array.push(action.payload)
             })
             builder.addCase(getMessage.pending, (state, action) => {
                 state.loading = 'pending'
             })
             builder.addCase(getMessage.fulfilled, (state, action) => {
                 state.loading = 'succeeded';
-                state.message = [];
+                state.sms_array = [];
             })
         }
     }

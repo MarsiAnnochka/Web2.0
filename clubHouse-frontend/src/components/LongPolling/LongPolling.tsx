@@ -5,7 +5,6 @@ import {sendMessage, getMessage} from "./@slice";
 
 const LongPolling: React.FC = () => {
     const [value, setValue] = useState('')
-    //const messages = useAppSelector(state => state.message.message);
     const sms_array = useAppSelector(state => state.message.sms_array)
     const dispatch = useAppDispatch();
 
@@ -27,13 +26,10 @@ const LongPolling: React.FC = () => {
                 <div className='chat-messages'>
                     <div className='messages'>
                         {
-                            // messages.map(message =>
-                            //     <div className="message">
-                            //         <p>{message}</p>
-                            //     </div>
-                            <div className="message">
-                                <p>{sms_array}</p>
-                            </div>
+                            sms_array.map(message =>
+                                <div className="message">
+                                    <p>{message}</p>
+                                </div>)
                         }
                     </div>
                 </div>
