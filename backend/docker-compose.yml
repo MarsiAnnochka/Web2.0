@@ -41,7 +41,7 @@ services:
       - sample-nodejs
       - sample-postgres
     networks:
-      sample:
+      default:
         aliases:
           - nginx
     restart: always
