@@ -30,6 +30,22 @@ services:
     command: yarn prod
     restart: always
 
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    depends_on:
+      - nodejs
+      - postgres
+    networks:
+      sample:
+        aliases:
+          - nginx
+    restart: always
+
 networks:
   default:
     external:
