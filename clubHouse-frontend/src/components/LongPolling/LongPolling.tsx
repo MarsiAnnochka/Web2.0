@@ -6,22 +6,15 @@ import {store} from "../../store";
 
 const LongPolling: React.FC = () => {
     const [value, setValue] = useState('')
-    const [loading,setLoading] = useState('');
-    const [sms_array, setSmsArray] = useState([])
-    // const sms_array = useAppSelector(state => state.message.sms_array)
+    const [loading, setLoading] = useState('');
+    const [sms_array, setSmsArray] = useState([]);
     const dispatch = useAppDispatch();
-
-    // useEffect(() => {
-    //     dispatch(getAllMessages())
-    //     dispatch(getMessage())
-    // }, [])
-
 
     useEffect(() => {
         dispatch(getAllMessages())
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getMessage())
     }, [loading])
 
@@ -42,18 +35,19 @@ const LongPolling: React.FC = () => {
                     <ul>
                         <li>Nastia</li>
                         <li>Anya</li>
+                        {/*{*/}
+                        {/*    users.map((name, id) => (*/}
+                        {/*    <li key={id}>{name}</li>*/}
+                        {/*))}*/}
                     </ul>
                 </div>
                 <div className='chat-messages'>
                     <div className='messages'>
-                        {/*<div className="message">*/}
-                        {/*    <p>{sms_array}</p>*/}
-                        {/*</div>*/}
                         {
                             sms_array.map(message =>
-                            <div className="message">
-                            <p>{message}</p>
-                            </div>)
+                                <div className="message">
+                                    <p>{message}</p>
+                                </div>)
                         }
                     </div>
                 </div>

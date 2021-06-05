@@ -10,6 +10,7 @@ import {Chat} from "./Chat";
 import {Redirect} from 'react-router-dom';
 import {useAppSelector} from "../hooks";
 import {LongPollingChat} from './LongPolling';
+import {Welcome} from "./WelcomePage";
 
 export const Router: React.FC = () => {
     const isAuth = useAppSelector(state => state.loginForm.isAuth);
@@ -21,12 +22,12 @@ export const Router: React.FC = () => {
                 <Switch>
                     <Route exact path="/" component={Home}/>
                     <Route exact path={Routes.LOGIN}
-                           component={() => (!isAuth) ? <Login/> : <Redirect to={Routes.CHAT}/>}/>
+                           component={() => (!isAuth) ? <Login/> : <Redirect to={Routes.WELCOME}/>}/>
                     <Route exact path={Routes.SIGNUP}
                            component={() => (!isSignUp) ? <SignUp/> : <Redirect to={Routes.LOGIN}/>}/>
                     <Route exact path={Routes.ENTERROOM} component={Room}/>
+                    <Route exact path={Routes.WELCOME} component={Welcome}/>
                     <Route exact path={Routes.CHAT} component={LongPollingChat}/>
-                    <Route exact path='/test' component={Chat}/>
                     <Route component={NotFound}/>
                 </Switch>
             </React.Suspense>

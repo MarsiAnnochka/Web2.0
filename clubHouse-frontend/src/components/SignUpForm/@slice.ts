@@ -93,17 +93,11 @@ export const SignUpFormSlice = createSlice({
         builder.addCase(signUpUser.pending, (state, action) => {
             state.loading = 'pending'
         })
-            .addCase(signUpUser.fulfilled, (state, action) => {
-                state.loading = 'succeeded';
-                state.login = '';
-                state.password = '';
-                state.firstName = '';
-                state.lastName = '';
-                state.email = '';
-                state.city = '';
-                state.isSignUp = true;
-                localStorage.setItem('token', action.payload.message.token); //сохраняем в браузере ответ
-            })
+        builder.addCase(signUpUser.fulfilled, (state, action) => {
+            state.loading = 'succeeded';
+            state.isSignUp = true;
+            localStorage.setItem('token', action.payload.message.token); //сохраняем в браузере ответ
+        })
     }
 })
 

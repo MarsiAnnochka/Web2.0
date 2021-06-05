@@ -95,7 +95,7 @@ export const messageSlice = createSlice({
             builder.addCase(getAllMessages.pending, (state, action) => {
                 state.loading = 'pending'
             })
-            builder.addCase(getAllMessages.fulfilled, (state, action:{payload: any}) => {
+            builder.addCase(getAllMessages.fulfilled, (state, action: { payload: any }) => {
                 state.loading = 'succeeded';
                 state.sms_array = action.payload;
             })
