@@ -18,22 +18,36 @@ const initialState: smsArray = {
     loading: 'idle',
 }
 
+export const getAllMessages = createAsyncThunk(
+    'messages',
+    async () => {
+        const postOptions = {
+            method: 'GET'
+        };
+        console.log("ALL mssgs STARTED")
+        const data = await fetchData('/api/messages', postOptions)
+        const allMessages = (await data.json()).sms_array;
+        console.log('allMessages:', allMessages);
+        console.log("ALL mssgs FINISHED");
+        return allMessages;
+    }
+)
+
 export const getMessage = createAsyncThunk(
     'get-messages',
     async () => {
         const postOptions = {
             method: 'GET'
         };
-        while (true) {
-            try {
-                console.log("STARTED")
-                const data = await fetchData('/api/get-message', postOptions)
-                const messages = (await data.json()).sms_array
-                console.log('getMessage:', messages);
-                console.log("FINISHED");
-            } catch (err) {
-                console.log('Error' + err)
-            }
+        try {
+            console.log("STARTED")
+            const data = await fetchData('/api/get-message', postOptions)
+            const messages = (await data.json()).sms_array
+            console.log('getMessage:', messages);
+            console.log("FINISHED");
+            return messages;
+        } catch (err) {
+            console.log('Error' + err)
         }
     }
 )
@@ -77,7 +91,13 @@ export const messageSlice = createSlice({
             })
             builder.addCase(getMessage.fulfilled, (state, action) => {
                 state.loading = 'succeeded';
-                state.sms_array = [];
+            })
+            builder.addCase(getAllMessages.pending, (state, action) => {
+                state.loading = 'pending'
+            })
+            builder.addCase(getAllMessages.fulfilled, (state, action:{payload: any}) => {
+                state.loading = 'succeeded';
+                state.sms_array = action.payload;
             })
         }
     }

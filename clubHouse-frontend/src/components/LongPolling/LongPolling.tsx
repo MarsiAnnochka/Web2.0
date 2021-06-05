@@ -1,16 +1,37 @@
 import * as React from 'react';
 import {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {sendMessage, getMessage} from "./@slice";
+import {sendMessage, getMessage, getAllMessages} from "./@slice";
+import {store} from "../../store";
 
 const LongPolling: React.FC = () => {
     const [value, setValue] = useState('')
-    const sms_array = useAppSelector(state => state.message.sms_array)
+    const [loading,setLoading] = useState('');
+    const [sms_array, setSmsArray] = useState([])
+    // const sms_array = useAppSelector(state => state.message.sms_array)
     const dispatch = useAppDispatch();
 
+    // useEffect(() => {
+    //     dispatch(getAllMessages())
+    //     dispatch(getMessage())
+    // }, [])
+
+
     useEffect(() => {
-        dispatch(getMessage())
+        dispatch(getAllMessages())
     }, [])
+
+    useEffect(()=>{
+        dispatch(getMessage())
+    }, [loading])
+
+    store.subscribe(() => {
+        setLoading(store.getState().message.loading)
+    })
+
+    store.subscribe(() => {
+        setSmsArray(store.getState().message.sms_array)
+    })
 
     return (
         <div className="wrapper">
@@ -25,11 +46,14 @@ const LongPolling: React.FC = () => {
                 </div>
                 <div className='chat-messages'>
                     <div className='messages'>
+                        {/*<div className="message">*/}
+                        {/*    <p>{sms_array}</p>*/}
+                        {/*</div>*/}
                         {
                             sms_array.map(message =>
-                                <div className="message">
-                                    <p>{message}</p>
-                                </div>)
+                            <div className="message">
+                            <p>{message}</p>
+                            </div>)
                         }
                     </div>
                 </div>

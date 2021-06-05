@@ -10,24 +10,24 @@ export const Home: React.FC = () => (
                 <Carousel.Item>
                     <img
                         className="d-block w-100"
-                        // src="/public/1.png"
-                        src="/1.png"
+                        src="/public/1.png"
+                        // src="/1.png"
                         alt="First slide"
                     />
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
                         className="d-block w-100"
-                        // src="/public/2.jpg"
-                        src="/2.jpg"
+                        src="/public/2.jpg"
+                        // src="/2.jpg"
                         alt="Second slide"
                     />
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
                         className="d-block w-100"
-                        // src="/public/3.jpg"
-                        src="/3.jpg"
+                        src="/public/3.jpg"
+                        // src="/3.jpg"
                         alt="Third slide"
                     />
                 </Carousel.Item>
