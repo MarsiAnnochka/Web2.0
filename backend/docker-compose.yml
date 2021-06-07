@@ -38,22 +38,7 @@ services:
     command: yarn prod
     restart: always
 
-  nginx:
-    container_name: frontend
-    build: ../clubHouse-frontend
-    ports:
-      - 80:80
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-    depends_on:
-      - sample-nodejs
-      - sample-postgres
-    networks:
-      sample:
-        aliases:
-          - nginx
-    restart: always
+  
 
 networks:
   sample:
