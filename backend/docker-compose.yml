@@ -40,7 +40,7 @@ services:
 
   nginx:
     container_name: frontend
-    build: ../clubHouse-frontend/docker/nginx
+    build: ../clubHouse-frontend
     ports:
       - 80:80
     volumes:
