@@ -39,7 +39,8 @@ services:
     restart: always
 
   nginx:
-    build: ./nginx
+    container_name: frontend
+    build: ../clubHouse-frontend/docker/nginx
     ports:
       - 80:80
     volumes:
