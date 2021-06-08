@@ -39,7 +39,7 @@ services:
     restart: always
 
   nginx-frontend:
-    container_name: nginx-front
+    container_name: nginx-frontend
     build: ./../clubHouse-frontend/
     depends_on:
       - sample-nodejs
