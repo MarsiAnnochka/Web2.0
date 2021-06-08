@@ -38,18 +38,18 @@ services:
     command: yarn prod
     restart: always
 
-#  nginx:
-#    container_name: nginx-front
-#    build: ./../clubHouse-frontend/
-#    depends_on:
-#      - sample-nodejs
-#    ports:
-#      - 8080:80
-#    restart: always
-#    networks:
-#      dev:
-#        aliases:
-#          - nginx-container
+  nginx:
+    container_name: nginx-front
+    build: ./../clubHouse-frontend/
+    depends_on:
+      - sample-nodejs
+    ports:
+      - 8080:80
+    restart: always
+    networks:
+      dev:
+        aliases:
+          - nginx-container
 
 networks:
   sample:
