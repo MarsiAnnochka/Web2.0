@@ -38,7 +38,7 @@ services:
     command: yarn prod
     restart: always
 
-  nginx-frontend:
+  nginx:
     container_name: nginx-frontend
     build: ./../clubHouse-frontend/
     depends_on:
