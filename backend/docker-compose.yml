@@ -47,9 +47,10 @@ services:
       - 8080:80
     restart: always
     networks:
-      dev:
+      sample:
         aliases:
           - nginx
+
 
 networks:
   sample:
