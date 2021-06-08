@@ -42,7 +42,6 @@ export const getMessage = createAsyncThunk(
         try {
             console.log("STARTED")
             const data = await fetchData('/api/get-message', postOptions)
-            console.log(await data.text())
             const messages = (await data.json()).sms_array
             console.log('getMessage:', messages);
             console.log("FINISHED");
