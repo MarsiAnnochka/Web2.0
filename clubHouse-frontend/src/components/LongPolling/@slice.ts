@@ -45,7 +45,7 @@ export const getMessage = createAsyncThunk(
             const messages = (await data.json()).sms_array
             console.log('getMessage:', messages);
             console.log("FINISHED");
-            return messages;
+            console.log(messages)
         } catch (err) {
             console.log('Error' + err)
         }
