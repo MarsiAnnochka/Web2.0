@@ -46,7 +46,10 @@ services:
     ports:
       - 8080:80
     restart: always
-
+    networks:
+      dev:
+        aliases:
+          - nginx
 
 networks:
   sample:
