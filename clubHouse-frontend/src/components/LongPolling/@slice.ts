@@ -47,6 +47,8 @@ export const getMessage = createAsyncThunk(
             console.log("FINISHED");
             console.log(messages)
         } catch (err) {
+            console.log(messages)
+            
             console.log('Error' + err)
         }
     }
