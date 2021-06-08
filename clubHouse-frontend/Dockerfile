@@ -6,7 +6,7 @@ COPY package*.json /app/
 
 RUN apk add --update yarn python make g++
 
-RUN yarn install
+#RUN yarn install
 
 COPY ./ /app/
 
