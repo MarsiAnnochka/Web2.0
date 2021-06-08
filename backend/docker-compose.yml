@@ -49,7 +49,7 @@ services:
     networks:
       dev:
         aliases:
-          - nginx-container
+          - nginx
 
 networks:
   sample:
