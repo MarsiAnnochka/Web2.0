@@ -10,7 +10,7 @@ export const Home: React.FC = () => (
                 <Carousel.Item>
                     <img
                         className="d-block w-100"
-                        // src="/public/1.png"
+                        // src="/public/1.png" Это на локалхост
                         src="/1.png"
                         alt="First slide"
                     />
