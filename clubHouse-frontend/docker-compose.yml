@@ -1,11 +1,10 @@
 version: '3.3'
 services:
-  frontend:
-    container_name: frontend
-    image: nginx:1.19.9-alpine
-    volumes:
-      - ./dist:/var/project/dist
-      - ./docker/nginx:/etc/nginx/conf.d
+  nginx:
+    container_name: nginx-front
+    build: .
+    ports:
+      - 8080:80
     restart: always
 
 networks:
